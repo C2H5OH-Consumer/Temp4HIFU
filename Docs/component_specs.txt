@@ -1,0 +1,43 @@
+
+Component Specifications
+
+Last Updated 11/04/2024 by Gerald Lee
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+## Dash and Plotly
+- Provides Graphical User Interface (GUI)
+    - User interface to mouse over a point of interest on the pressure field.
+    - User interface to change time scale for temperature graph
+
+
+## Matplotlib (?)
+- Used to display graph of the temperature change over time for a specific point of interest defined by the user. 
+
+
+## Python Functions
+- Intensity Field  
+    - INPUT: Ultrasound Parameters (pulse reime, transducer properties)
+    - OUTPUT: Acoustic Intensity for a pixel (2D matrix of doubles for indices in XY space)
+
+- Bioheat Equation
+    - INPUT: Acoustic Intensity (2D matrix of doubles for indices in XY space)
+    - OUTPUT: Temperature for a voxel (3D matrix of doubles for indices in XY space and time) 
+
+- Temperature Compliance 
+    - INPUT: Temperature (double)
+    - Test if Temperature is above or below FDA compliance for medical human tissue temperature increase.
+    - OUTPUT: "Is within" or "Is not within" or T/F output
+
+- Popup Box 1
+    - Interacts with Dash
+    - For a specific point of interest on pressure field, display XY coordinates and intensity value
+
+- Popup Box 2
+    - Interacts with Matplotlib 
+    - For a specific point of interest on temperature graph, display temperature for specific time and FDA compliance T/F
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
