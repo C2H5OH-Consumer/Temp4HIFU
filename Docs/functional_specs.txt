@@ -6,6 +6,14 @@ Last Updated 11/04/2024 by Gerald Lee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+## PROBLEM STATEMENT
+- High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as in cancer treatment.
+- Generated increase of temperature must be within safety guidelines for human use, which is essential for FDA approval and compliance.
+- Accurate predictions of temperature bioeffects must be demonstrated through computational simulations before applications ex vivo and in vivo. 
+- Computational simulations requires modeling for both HIFU/FUS pressure fields and then the Bioheat equation; not complicated individually, but when combined can be tricky to navigate based on initial conditions
+- This package serves to act as a quick and dirty program to easily estimate temperature compliance given the design of the transducer and the properties of the medium. 
+
+
 ## WHO IS THE USER AUDIENCE
 - User who wants to predict the temperature output of a specific focused ultrasound treatment regime. 
 - User who wants to validate the temperature output of a specific focused ultrasound treatment regime. 
