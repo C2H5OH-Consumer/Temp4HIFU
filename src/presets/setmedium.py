@@ -24,7 +24,6 @@ def setMedium(index, inputs):
                 absCoeff = 0.025,
                 specHeatCap = 4180,
                 thermDiff = 1.46 * 1e-7,
-                error = 0,
             )
             return mediumProp
         
@@ -37,7 +36,6 @@ def setMedium(index, inputs):
                 absCoeff = 3.6,
                 specHeatCap = 2407,
                 thermDiff = 0.95 * 1e-7,
-                error = 0,
             )
             return mediumProp
         
@@ -50,7 +48,6 @@ def setMedium(index, inputs):
                 absCoeff = 3.5,
                 specHeatCap = 4270,
                 thermDiff = 1.32 * 1e-7,
-                error = 0,
             )
             return mediumProp
             
@@ -63,7 +60,6 @@ def setMedium(index, inputs):
                 absCoeff = 6,
                 specHeatCap = 1800,
                 thermDiff = 1.05 * 1e-7,
-                error = 0,
             )
             return mediumProp
          
@@ -76,20 +72,5 @@ def setMedium(index, inputs):
                 absCoeff = inputs['absCoeff'],
                 specHeatCap = inputs['specHeatCap'],
                 thermDiff = inputs['thermDiff'],
-                error = 0,
             )
             return mediumProp
-        
-        case _:
-            mediumProp = dict(
-                name = 'Custom',
-                speed = inputs['speed'],
-                density = inputs['density'],
-                absCoeff = inputs['absCoeff'],
-                specHeatCap = inputs['specHeatCap'],
-                thermDiff = inputs['thermDiff'],
-                error = 1,
-            )
-            print('ERROR: medium.py')
-            return mediumProp
-
