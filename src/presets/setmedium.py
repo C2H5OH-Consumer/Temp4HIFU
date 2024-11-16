@@ -12,7 +12,6 @@ def setMedium(index, inputs):
             mediumProp.absCoeff == [Np/(m*MHz^2)]
             mediumProp.specHeatCap == [J/(kg*K)]
             mediumProp.thermDiff == [(m^2)/s]
-            mediumProp.error == 0 or 1
     """
     match index:
 
