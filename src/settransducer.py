@@ -2,7 +2,7 @@ def setTransducer(freq_input, radius_input, focus_input, initPressure_input):
     """
     INPUT ARG
         frequency = [MHz]
-        radius = [mm]
+        radius = [m]
         focus = [m]
         initPressure = [Pa]
 
