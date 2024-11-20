@@ -17,10 +17,8 @@ def generateField(trans,medium,field,iscomplete=0):
     OUTPUT ARG
         pressure_field == resulting rayleigh integral pressure field
 
-
     """
     import numpy as np
-
 
     # Edit and Transform Transducer Properties
     d = trans["focus"]
@@ -88,4 +86,4 @@ def generateField(trans,medium,field,iscomplete=0):
 
     print('Rayleigh Integral Complete')
     iscomplete = 1
-    return pressure_field_new, z_values, r_value_new, iscomplete, r_value_tophalf, r_value_bothalf
+    return pressure_field_new, z_values, r_value_new, iscomplete
