@@ -82,6 +82,7 @@ def generateField(trans,medium,field,iscomplete=0):
 
     # Fix Dividing by 0 at the first center point
     r_CenterIdx = round((-1*radial_min/dr))
+    r_value_new[r_CenterIdx] = 1e-20
     pressure_field_new[r_CenterIdx,0] = 0
 
     print('Rayleigh Integral Complete')
