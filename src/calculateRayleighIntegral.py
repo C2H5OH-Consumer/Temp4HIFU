@@ -2,27 +2,31 @@ def generateField(trans,medium,field,iscomplete=0):
     """
     INPUT ARG
         trans == dictionary of transducer properties
-            "freq" = [Hz]
-            "radius" = [m]
-            "focus" = [m]
-            "initPressure" = [Pa]
-        medium == calls medium properties
-            "speed" = [m/s]
-            "density" = [kg/m^3]
-            "absCoeff" = [Np/(m*MHz^2)]
+            "freq" == [Hz] Transmit Frequency of transducer
+            "radius" == [m] Radius of transducer probe
+            "focus" == [m] Focal point in space 
+            "initPressure" == [Pa] Initial Pressure output by transducer
+
+        medium == [dict] dictionary of medium properties
+            "speed" == [m/s] Speed of Sound
+            "density" == [kg/m^3] Density 
+            "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
+
         field == calls 2D field properties
-            "numAxialStep"
-            "numRadialStep"
+            "numAxialStep" == [int] Number of Axial Steps
+            "numRadialStep" == [int] Number of Radial Steps
 
     OUTPUT ARG
-        pressure_field == resulting rayleigh integral pressure field
+        pressure_field == [2D list] Resulting Rayleigh Integral Pressure Field
+        z_axis == [1D list] Axial axis of Pressure Field
+        r_axis == [1D list] Radial axis of Pressure Field
 
     """
     import numpy as np
     import pandas as pd
 
     # Edit and Transform Transducer Properties
-    d = trans["focus"]
+    d = trans["focus"] # Reallocate variable
     k = 2 * np.pi * trans["freq"] / medium["speed"] # Wave Number
     angularF = trans["radius"]/trans["focus"] # Angular Frequency
     abs_Coeff = medium["absCoeff"] * (pow((trans["freq"]/(1e6)),2)) # POWER LAW
