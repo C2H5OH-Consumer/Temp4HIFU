@@ -17,13 +17,12 @@ def generateField(trans,medium,field,iscomplete=0):
             "numRadialStep" == [int] Number of Radial Steps
 
     OUTPUT ARG
-        pressure_field == [2D list] Resulting Rayleigh Integral Pressure Field
-        z_axis == [1D list] Axial axis of Pressure Field
-        r_axis == [1D list] Radial axis of Pressure Field
+        pressure_field == [2D list][p/p0] Resulting Rayleigh Integral Pressure Field
+        z_axis == [1D list][m] Axial axis of Pressure Field
+        r_axis == [1D list][m] Radial axis of Pressure Field 
 
     """
     import numpy as np
-    import pandas as pd
 
     # Edit and Transform Transducer Properties
     d = trans["focus"] # Reallocate variable
