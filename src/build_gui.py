@@ -1,14 +1,21 @@
+# USE DASH TO BUILD GUI
 from dash import Dash, html, dcc, callback, Output, Input, ctx
 import plotly.graph_objects as go
 import plotly.express as px
-
+# STANDARD IMPORTS
 import pandas as pd
 import numpy as np
 import os
+# CUSTOM FUNCTIONS
+import setParam, calculateRayleighIntegral, calculateBioheat
 
-import setParam
-import calculateRayleighIntegral
-import calculateBioheat
+##### ---- ##### ---- ##### ---- SET PLACEHOLDER ---- ##### ---- ##### ---- #####
+
+placeholder_df = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/df_pressure2D_placeholder.csv'
+placeholder_z = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/z_axis_placeholder.csv'
+placeholder_r =  'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/r_axis_placeholder.csv'
+
+##### ---- ##### ---- ##### ---- BUILD APP ---- ##### ---- ##### ---- #####
 
 app = Dash('tempCompliance4HIFU')
 app.layout = [
@@ -42,9 +49,9 @@ app.layout = [
     html.Div([     
         # Call Data (Top)
         html.H3('Call Data Files', style ={'textAlign':'center'}),
-            dcc.Input(id="dataFrame",type='text',value="sampledata\\df_pressure2D_placeholder.csv"),
-            dcc.Input(id="ZAXE",type='text',value="sampledata\\z_axis_placeholder.csv"),
-            dcc.Input(id="RAXE",type='text',value="sampledata\\r_axis_placeholder.csv"),
+            dcc.Input(id="dataFrame",type='text',value=placeholder_df),
+            dcc.Input(id="ZAXE",type='text',value=placeholder_z),
+            dcc.Input(id="RAXE",type='text',value=placeholder_r),
         # Find Heat Location (Middle 1)
         html.H3('Calculate Heat at Point (Z,R)', style ={'textAlign':'center'}), 
             html.P('Axial Point Z [m]', style ={'textAlign':'left'}),
@@ -104,8 +111,26 @@ app.layout = [
     ], style={'width': '15%', 'float': 'right', 'display': 'inline-block'}),
 ]
 
-
 ##### ---- ##### ---- ##### ---- CALLBACKS ---- ##### ---- ##### ---- #####
+
+# Set Medium Properties Callback
+@callback(
+    Output('Speed','value'),            # [m/s]
+    Output('Density','value'),          # [kg/m^3]
+    Output('AbsCoeff','value'),         # [Np/(m*MHz^2)]
+    Output('SpecHeatCap','value'),      # [J/(kg*K)]
+    Output('ThermDiff','value'),        # [(m^2)/s]
+
+    Input('DROP_medium','value'),       # [text]
+    Input('Speed','value'),             # [m/s]
+    Input('Density','value'),           # [kg/m^3]
+    Input('AbsCoeff','value'),          # [Np/(m*MHz^2)]
+    Input('SpecHeatCap','value'),       # [J/(kg*K)]
+    Input('ThermDiff','value'),         # [(m^2)/s]
+)
+def getMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff):
+    mediumProp = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
+    return mediumProp['speed'], mediumProp['density'], mediumProp['absCoeff'], mediumProp['specHeatCap'], mediumProp['thermDiff']
 
 
 # Update 2D Figure (Pressure or Intensity)
@@ -127,9 +152,9 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
         # Update the 2D Figure Depending on Pressure or Intensity Selection
         directory = os.getcwd()     
         # df_pressure2D = np.rot90(np.array(pd.read_csv((directory + "\\" +  filename1))))
-        df_pressure2D = np.array(pd.read_csv((directory + "\\" +  filename1)))[:,1:]
-        z_axis = np.array(pd.read_csv((directory + "\\" +  filename2)))[:,1]
-        r_axis = np.array(pd.read_csv((directory + "\\" +  filename3)))[:,1]
+        df_pressure2D = np.array(pd.read_csv(filename1))[:,1:]
+        z_axis = np.array(pd.read_csv(filename2))[:,1]
+        r_axis = np.array(pd.read_csv(filename3))[:,1]
         # Identify what to Graph
         match DROP_field2D:
             case 'Intensity':
@@ -161,26 +186,6 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
             yaxis=dict(title=dict(text='R-Axis [mm]')),
         )
         return fig2D
-
-
-# Set Medium Properties Callback
-@callback(
-    Output('Speed','value'),            # [m/s]
-    Output('Density','value'),          # [kg/m^3]
-    Output('AbsCoeff','value'),         # [Np/(m*MHz^2)]
-    Output('SpecHeatCap','value'),      # [J/(kg*K)]
-    Output('ThermDiff','value'),        # [(m^2)/s]
-
-    Input('DROP_medium','value'),       # [text]
-    Input('Speed','value'),             # [m/s]
-    Input('Density','value'),           # [kg/m^3]
-    Input('AbsCoeff','value'),          # [Np/(m*MHz^2)]
-    Input('SpecHeatCap','value'),       # [J/(kg*K)]
-    Input('ThermDiff','value'),         # [(m^2)/s]
-)
-def getMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff):
-    mediumProp = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
-    return mediumProp['speed'], mediumProp['density'], mediumProp['absCoeff'], mediumProp['specHeatCap'], mediumProp['thermDiff']
 
 
 # Calculate Pressure Field (When Button is Pressed)
@@ -236,9 +241,15 @@ def calculate2DField(button2DClicks,
             df_pressure2D.to_csv(filename1)
             filename2="z_axis_" + str(button2DClicks) + ".csv"
             z_axis.to_csv(filename2)
-            filename3="r_axis_.csv" + str(button2DClicks) + ".csv"
+            filename3="r_axis_" + str(button2DClicks) + ".csv"
             r_axis.to_csv(filename3)
-            return filename1, filename2, filename3
+            # Return Links
+            directory = os.getcwd()  
+            filename1_path = directory + "\\" +  filename1
+            filename2_path = directory + "\\" +  filename2
+            filename3_path = directory + "\\" +  filename3
+
+            return filename1_path, filename2_path, filename3_path
     # When Button is Not Pressed
     else:
         return filename1, filename2, filename3
@@ -278,10 +289,9 @@ def calculate1DField(button1DClicks,
     # When the Button is Pressed
     if 'button1D' == ctx.triggered_id:
         # Get Files   
-        directory = os.getcwd()  
-        df_pressure2D = np.array(pd.read_csv((directory + "\\" +  filename1)))[:,1:]
-        z_axis = np.array(pd.read_csv((directory + "\\" +  filename2)))[:,1]
-        r_axis = np.array(pd.read_csv((directory + "\\" +  filename3)))[:,1]
+        df_pressure2D = np.array(pd.read_csv(filename1))[:,1:]
+        z_axis = np.array(pd.read_csv(filename2))[:,1]
+        r_axis = np.array(pd.read_csv(filename3))[:,1]
         # Set Input Parameters
         trans = dict(freq = Frequency*1e6,radius = Radius, focus = Focus, initPressure = InitPress*1e6)
         medium = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)

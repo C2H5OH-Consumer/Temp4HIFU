@@ -1,7 +1,3 @@
-
-
-
-
 ##### ---- ##### ---- ##### ---- MEDIUM ---- ##### ---- ##### ---- #####
 def setMedium(index:str, speed_in, dens_in, absCoeff_in, specHeatCap_in, thermDiff_in):
     """
