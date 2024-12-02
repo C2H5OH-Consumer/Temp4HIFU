@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(
-    name = 'TEMPCOMPLIANCE4HIFU',
+    name = 'TempCompliance4HIFU',
     version = '0.1.0',
     author = 'Gerald Lee',
     author_email = 'gerald13@uw.edu',

@@ -289,6 +289,10 @@ def calculate2DField(button2DClicks,
             filename3="ERROR_r"
             return filename1, filename2, filename3
         else:
+            # Convert Data to Pandas Data Frame
+            df_pressure2D = pd.DataFrame(df_pressure2D)
+            z_axis = pd.DataFrame(z_axis)
+            r_axis = pd.DataFrame(r_axis)
             # File Names and Save to CSV
             filename1="df_pressure2D_" + str(button2DClicks) + ".csv"
             df_pressure2D.to_csv(filename1)

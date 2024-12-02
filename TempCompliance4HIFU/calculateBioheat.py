@@ -28,52 +28,36 @@ def generateVector(axial_loc,radial_loc,trans,medium,heat,pressure2D,z_values,r_
         r_values == [1D list][m] Radial axis of Pressure Field 
         
     OUTPUT ARG
-        time_axis == axis in time
-        temp_vec == Temperature Vector over Time
-        Q == Heat Map
+        time_axis == [1D list][s] Time Axis
+        temp_vec == [1D list][Celsius] Temperature Vector over Time
+        Q == [2D list][Joules] Heat Map 
     """
     import numpy as np
 
     # Edit and Transform Transducer Properties
-    d = trans["focus"]
+    d = trans["focus"] # Reallocate variable
     abs_Coeff = medium["absCoeff"] * (pow((trans["freq"]/(1e6)),2)) # POWER LAW
-    dutyCycleRatio = heat["DutyCycle"]/100
-
-
-    # Set Axes
+    dutyCycleRatio = heat["DutyCycle"]/100 # Duty Cycle Percentage
+    # Set Axes and Steps
     axial_min = 0.001
     axial_max = 2*d
     radial_min = -trans["radius"]
     dz = (axial_max - axial_min) / (len(z_values)-1)
     dr = -1 * radial_min / ((len(r_values)-1)/2)
-    temp_dist_times = [30]
     dt = heat["numTime"]
     time_axis = np.arange(0,(heat["HeatTime"]+heat["CoolTime"]+dt),dt)
-
-
     # Conversion of Heat Input due to Intensity
     intensity2D = pow(pressure2D,2) * pow(trans["initPressure"],2) * dutyCycleRatio / (2 * medium["density"] * medium["speed"])
     Q = intensity2D * 2 * abs_Coeff / (medium["density"] * medium["specHeatCap"])
 
-    # Temperature Matrix
+    # Temperature Matrix and Indices
     numR,numZ = np.shape(pressure2D)
     temp_dist = np.zeros((numR,numZ),dtype=np.float64)
-
     r_center_idx = round(((0-radial_min)/dr)+1)
     radial_temp_idx = round(((radial_loc-radial_min)/dr)+1)
     axial_temp_idx = round(((axial_loc-axial_min)/dz)+1)
     temp_vec = []
     temp_vec.append(temp_dist[axial_temp_idx,radial_temp_idx])
-
-    heat_dist_indices = []
-    cool_dist_indices = []
-    for ii in range(1,len(temp_dist_times)):
-        time_value = temp_dist_times[ii]
-        if time_value >= 0 and time_value <= heat["HeatTime"]:
-            heat_dist_indices = heat_dist_indices.append(round(time_value/dt))
-        elif time_value > heat["HeatTime"]and time_value <= (heat["HeatTime"] + heat["CoolTime"]):
-            cool_dist_indices = cool_dist_indices.append(round((time_value - heat["HeatTime"])/dt))
-    
 
     # FTCS Scheme ADD FUNCTION FOR HEAT
     print('HEATING')
@@ -122,7 +106,7 @@ def generateVector(axial_loc,radial_loc,trans,medium,heat,pressure2D,z_values,r_
                 temp_dist[ii,jj] = currTemp + z_component + r_component
         temp_vec.append(temp_dist[axial_temp_idx,radial_temp_idx])
 
-
+    # Finish
     print("Bioheat Calculation Complete")
     iscomplete = 1
     return time_axis, temp_vec, Q, iscomplete
