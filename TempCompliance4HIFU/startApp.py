@@ -10,10 +10,10 @@ import os
 import calculateRayleighIntegral, calculateBioheat
 
 ##### ---- ##### ---- ##### ---- SET FILE PLACEHOLDERS ---- ##### ---- ##### ---- #####
-
-placeholder_df = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/df_pressure2D_placeholder.csv'
-placeholder_z = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/z_axis_placeholder.csv'
-placeholder_r =  'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/src/sampledata/r_axis_placeholder.csv'
+sampledataDirectory = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/TempCompliance4HIFU/sampledata/'
+placeholder_df = sampledataDirectory + '/df_pressure2D_placeholder.csv'
+placeholder_z = sampledataDirectory + '/z_axis_placeholder.csv'
+placeholder_r =  sampledataDirectory + '/r_axis_placeholder.csv'
 
 ##### ---- ##### ---- ##### ---- BUILD APP ---- ##### ---- ##### ---- #####
 
@@ -229,7 +229,7 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
             display_array, 
             x = z_axis, 
             y = r_axis,
-            labels={"x":"Z-Axis [mm]", "y":"R-Axis [mm]", "color":colorbarLabel},
+            labels={"x":"Z-Axis [m]", "y":"R-Axis [m]", "color":colorbarLabel},
             title=titleLabel,
             aspect='auto', 
             origin='lower',
@@ -240,8 +240,8 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
         fig2D = go.Figure()
         fig2D.update_layout(
             title=dict(text='Load Data Required'),
-            xaxis=dict(title=dict(text='Z-Axis [mm]')),
-            yaxis=dict(title=dict(text='R-Axis [mm]')),
+            xaxis=dict(title=dict(text='Z-Axis [m]')),
+            yaxis=dict(title=dict(text='R-Axis [m]')),
         )
         return fig2D
 

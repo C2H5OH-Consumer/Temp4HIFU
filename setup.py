@@ -1,15 +1,15 @@
 from setuptools import setup, find_packages
-setup(
+
+opts = setup(
     name = 'TempCompliance4HIFU',
     version = '0.1.0',
+    url='',
     author = 'Gerald Lee',
     author_email = 'gerald13@uw.edu',
     description = 'Package Description',
     packages = find_packages(),
-    # classifiers=[
-    #     'Programming Language :: Python :: 3',
-    #     'License :: OSI Approved :: MIT License',
-    #     'Operating System :: OS Independent',
-    # ],
-    # python_requires='>=3.6',
+    package_data = {'TempCompliance4HIFU': ['Scripts/*','tests/*']}
 )
+
+if __name__ == '__main__':
+    setup(**opts)
