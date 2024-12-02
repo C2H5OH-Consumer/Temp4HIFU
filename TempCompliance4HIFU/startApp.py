@@ -217,7 +217,6 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
         match DROP_field2D:
             case 'Intensity':
                 display_array = pow(df_pressure2D,2) * pow(InitPress,2) * DutyCycle / (2 * Density * Speed)
-                # display_array = pow(df_pressure2D,2)
                 colorbarLabel = "[MPa^2]"
                 titleLabel = "Intensity Map"
             case 'Pressure':

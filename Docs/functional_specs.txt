@@ -1,40 +1,35 @@
 Functional Specifications
 
-Last Updated 11/04/2024 by Gerald Lee
+Last Updated 12/01/2024 by Gerald Lee
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-## PROBLEM STATEMENT
-- High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as in cancer treatment.
-- Generated increase of temperature must be within safety guidelines for human use, which is essential for FDA approval and compliance.
-- Accurate predictions of temperature bioeffects must be demonstrated through computational simulations before applications ex vivo and in vivo. 
-- Computational simulations requires modeling for both HIFU/FUS pressure fields and then the Bioheat equation; not complicated individually, but when combined can be tricky to navigate based on initial conditions
-- This package serves to act as a quick and dirty program to easily estimate temperature compliance given the design of the transducer and the properties of the medium. 
+High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as for cancer treatment. 
+The generated increase of temperature during HIFU thermal treatment must be within safety guidelines for human use (44 degrees Celsius), which is essential for FDA approval and compliance.
+Accurate predictions of temperature bioeffects must be demonstrated through computational simulations before applications ex vivo and in vivo. 
+Computational simulations requires modeling for both HIFU/FUS pressure fields and then the Bioheat equation; not complicated individually, but when combined can be tricky to navigate based on initial conditions.
 
+This package serves to act as a quick and dirty program to easily estimate temperature compliance given the design of the therapy and the properties of the medium. 
 
-## WHO IS THE USER AUDIENCE
-- User who wants to predict the temperature output of a specific focused ultrasound treatment regime. 
-- User who wants to validate the temperature output of a specific focused ultrasound treatment regime. 
-- User who wants to confirm that the temperature output of a specific focused ultrasound treament regime is within FDA compliance for medical human tissue temperature increase. 
-- User who wants a GUI, a.k.a plug and play program (download and is useable)
+Provided is a Graphical User Interface (GUI) based in Dash and Plotly (startApp.py) as well as two functions able to be used independently of the application:
+    1 - The Rayleigh Integral (calculateRayleighIntegral.py)
+        Necessary to calculate pressure fields, based on a cylindrical axis system (Z,R) [m]. 
+        Assumes linear propagation, radial symmetry, and no scattering effects. 
+    2 = The Bioheat Equation: (calculateBioheat.py)
+        A Forward Time Centered Space finite element scheme to solve Penne's Bioheat Equation. 
+        Identifies temperature change over one location in (Z,R) [m] space for a given heat and cool time. 
+        Assumes linear propagation, instantaneous heat transfer, and ignores blood perfusion and porous attributes of the medium.
+        CAUTION: prone to numerical instability if time step is too large. Recommended time step == 5e-3 [s].
 
+The most basic use cases for the above functions includes identifing pressure and intensity output based on a given initial pressure, calculate and graph a pressure field, observe temperature over time for a given location in (Z,R) [m] space, and load in pre-calculated .CSV files to observe the same thing. 
+Ideal use cases can be expanded to testing transducer designs in the linear regime, observe if temperature at point of interest is within FDA compliance for medical human tissue temperature increase, and as a learning tool. 
 
-## WHAT INFORMATION USERS WANT FROM SYSTEM
-- The approximated pressure or intensity field based on ultrasound parameter inputs.
-- The approximated pressure or intensity at a specific point of interest in space. 
-- The calculated temperature at a specific point of interest in space, for a specific time. 
-- If the calculated temperature at a specific point in space and time is within FDA compliance for medical human tissue temperature increase. 
-
-
-## USE CASES
-- Calculate pressure field when provided a set of inputs (pulse reime, transducer properties)
-- Change point of interest on 2D map (indices for XY in space)
-- View intensity or pressure value at point of interest on 2D map
-- Change point of interest on 1D graph (indices for time)
-- View temperature at point of interest on 1D graph
-- See if temperature at point of interest is within FDA compliance for medical human tissue temperature increase. 
+The package is designed for users with some knowledge of therapeutic ultrasound design; however, this tool provides a unique entry point to learning about bioheat and ultrasound therapeutics in general. 
+The GUI provides users a clean interface to visualize the important condition specifications required to perform therapeutic ultrasound and introduce the complexity of its experimental design. 
+Its ability to load pre-calculated data also allows researchers to input their own data for visualization and calculation of bioheat at a specific location in (Z,R) [m] space. 
+Users that do not have access to MATLAB or COMSOL would be able to take advantage of this package to begin exploring therapeutic ultrasound design structures in Python instead of spending excessively for a computational program (although suggested to get MATLAB or COMSOL for more complex applications).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

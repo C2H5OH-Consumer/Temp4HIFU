@@ -7,40 +7,83 @@ Last Updated 11/04/2024 by Gerald Lee
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-## Dash and Plotly
-- Provides Graphical User Interface (GUI)
-    - User interface to mouse over a point of interest on the pressure field.
-    - User interface to change time scale for temperature graph
+## Dash
+    startApp
+        - Provides Graphical User Interface (GUI)
+            - User interface to mouse over a point of interest on the pressure field.
+            - User interface to change time scale for temperature graph
+            - Allows change of variables through inputs and dropdown menus
+            - Graphs figures using Plotly express and graph-objects
+            - Provides callbacks to initiate large functions and calculations
 
 Note: Dash provides a link to an online web based GUI service run from the machine. This, however, freezes the terminal. 
-CTRL+C kills the command, but once the script stops running then the webpage will also fail to return any callbacks called after killing the app. 
-Use instructions should include to 1) open the link and 2) when ready to kill app, kill app in terminal (can also be programmed as callback)
-
-## Matplotlib (?)
-- Used to display graph of the temperature change over time for a specific point of interest defined by the user. 
+      CTRL+C kills the command, but once the script stops running then the webpage will also fail to return any callbacks called after killing the app. 
+      Use instructions include to 1) open the link and 2) when ready to kill app, kill app in terminal.
 
 
 ## Python Functions
-- Intensity Field  
-    - INPUT: Ultrasound Parameters (pulse reime, transducer properties)
-    - OUTPUT: Acoustic Intensity for a pixel (2D matrix of doubles for indices in XY space)
 
-- Bioheat Equation
-    - INPUT: Acoustic Intensity (2D matrix of doubles for indices in XY space)
-    - OUTPUT: Temperature for a voxel (3D matrix of doubles for indices in XY space and time) 
+This function outputs a pressure field and its respective axes based on the given inputs.
+calculateRayleighIntegral
+    .generateField
+        INPUT ARG
+            trans == dictionary of transducer properties
+                "freq" == [Hz] Transmit Frequency of transducer
+                "radius" == [m] Radius of transducer probe
+                "focus" == [m] Focal point in space 
+                "initPressure" == [Pa] Initial Pressure output by transducer
 
-- Temperature Compliance 
-    - INPUT: Temperature (double)
-    - Test if Temperature is above or below FDA compliance for medical human tissue temperature increase.
-    - OUTPUT: "Is within" or "Is not within" or T/F output
+            medium == [dict] dictionary of medium properties
+                "speed" == [m/s] Speed of Sound
+                "density" == [kg/m^3] Density 
+                "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
 
-- Popup Box 1
-    - Interacts with Dash
-    - For a specific point of interest on pressure field, display XY coordinates and intensity value
+            field == calls 2D field properties
+                "numAxialStep" == [int] Number of Axial Steps
+                "numRadialStep" == [int] Number of Radial Steps
+        OUTPUT ARG
+            pressure_field == [2D list][p/p0] Resulting Rayleigh Integral Pressure Field
+            z_axis == [1D list][m] Axial axis of Pressure Field
+            r_axis == [1D list][m] Radial axis of Pressure Field 
 
-- Popup Box 2
-    - Interacts with Matplotlib 
-    - For a specific point of interest on temperature graph, display temperature for specific time and FDA compliance T/F
+
+This function outputs a temperature vector and its respective time axis based on the given inputs.
+calculateBioheat
+    .generateVector
+        INPUT ARG
+            axial_loc == [m] Coordinate Z of Interest Location
+            radial_loc == [m] Coordinate R of Interest Location
+
+            trans == dictionary of transducer properties
+                "freq" == [Hz] Transmit Frequency of transducer
+                "radius" == [m] Radius of transducer probe
+                "focus" == [m] Focal point in space 
+                "initPressure" == [Pa] Initial Pressure output by transducer
+
+            medium == calls medium properties
+                "speed" == [m/s] Speed of Sound
+                "density" == [kg/m^3] Density 
+                "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
+                "specHeatCap" == [J/(kg*K)] Specific Heat Capacity
+                "thermDiff" == [(m^2)/s] Thermal Diffusivity 
+
+            heat == calls heating parameters
+                "numTime" == [s]
+                "HeatTime" == [s]
+                "CoolTime" == [s]
+                "DutyCycle" == [%] 
+
+            pressure2D == [2D list][p/p0] Rayleigh Integral Pressure Field
+            z_values == [1D list][m] Axial axis of Pressure Field
+            r_values == [1D list][m] Radial axis of Pressure Field 
+            
+        OUTPUT ARG
+            time_axis == [1D list][s] Time Axis
+            temp_vec == [1D list][Celsius] Temperature Vector over Time
+            Q == [2D list][Joules] Heat Map 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 ## Project Plan
