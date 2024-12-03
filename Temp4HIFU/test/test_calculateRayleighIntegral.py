@@ -3,8 +3,8 @@ import unittest
 import numpy as np
 import pandas as pd 
 import sys
-sys.path.append('../TempCompliance4HIFU')
-from TempCompliance4HIFU import calculateRayleighIntegral
+sys.path.append('../Temp4HIFU')
+from Temp4HIFU import calculateRayleighIntegral
 
 # Test Constants
 trans = dict(freq=1*1e6, radius=0.02, focus=0.05, initPressure=1*1e6)

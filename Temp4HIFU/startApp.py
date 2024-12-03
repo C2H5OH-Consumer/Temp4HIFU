@@ -1,6 +1,5 @@
-def startPackage():
+def startGUI():
 
-    
     # USE DASH TO BUILD GUI
     from dash import Dash, html, dcc, callback, Output, Input, ctx
     import plotly.graph_objects as go

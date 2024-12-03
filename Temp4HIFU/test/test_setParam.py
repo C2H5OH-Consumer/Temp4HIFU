@@ -3,8 +3,8 @@ import unittest
 import numpy as np
 import pandas as pd 
 import sys
-sys.path.append('../TempCompliance4HIFU')
-from TempCompliance4HIFU import setParam
+sys.path.append('../Temp4HIFU')
+from Temp4HIFU import setParam
 
 # Test Constants
 medium = dict(name='Water', speed=1500, density=1000, absCoeff=0.025, specHeatCap=4180, thermDiff=1.46*1e-7)

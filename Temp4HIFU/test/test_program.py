@@ -3,8 +3,8 @@ import unittest
 import numpy as np
 import pandas as pd 
 import sys
-sys.path.append('../TempCompliance4HIFU')
-from TempCompliance4HIFU import startApp
+sys.path.append('../Temp4HIFU')
+from Temp4HIFU import startApp
 
 class TestFunctions(unittest.TestCase):
     
