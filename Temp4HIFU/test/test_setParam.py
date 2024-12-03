@@ -1,7 +1,5 @@
 # Imports
 import unittest
-import numpy as np
-import pandas as pd 
 import sys
 sys.path.append('../Temp4HIFU')
 from Temp4HIFU import setParam

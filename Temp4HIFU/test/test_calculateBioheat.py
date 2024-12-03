@@ -1,4 +1,3 @@
-# Imports
 import unittest
 import numpy as np
 import pandas as pd 
@@ -23,20 +22,20 @@ z_axis = np.array(pd.read_csv(placeholder_z))[:,1]
 r_axis = np.array(pd.read_csv(placeholder_r))[:,1]
 
 # Load Test Data (MATLAB)
-# testdataDir = ''
+testdataDir = 'https://raw.githubusercontent.com/C2H5OH-Consumer/Temp4HIFU/refs/heads/main/Temp4HIFU/test/testData/'
 # testData_pressure2D = np.array(pd.read_csv('testData_pressure2D.csv'))
 
 
 # Test Functions
 class TestFunctions(unittest.TestCase):
     
-    def test_calculateBioheat(self):
+    def test_calculateBioheat_complete(self):
         """
         Test if function completes fully - iscomplete
         """
         time_axis, temp_vec, Q, iscomplete = calculateBioheat.generateVector(observeZ,observeR,trans,medium,heat,df_pressure2D,z_axis,r_axis,iscomplete=0)
         self.assertTrue(iscomplete == 1)
-        print('> test_calculateBioheat PASS')
+        print('> test_calculateBioheat_complete PASS')
 
 
 
