@@ -1,18 +1,18 @@
-def generateField(trans,medium,field,iscomplete=0):
+def generateField(trans:dict,medium:dict,field:dict,iscomplete=0):
     """
     INPUT ARG
-        trans == dictionary of transducer properties
-            "freq" == [Hz] Transmit Frequency of transducer
-            "radius" == [m] Radius of transducer probe
-            "focus" == [m] Focal point in space 
-            "initPressure" == [Pa] Initial Pressure output by transducer
+        trans == [dict] dictionary of transducer properties
+            "freq" == [float][Hz] Transmit Frequency of transducer
+            "radius" == [float][m] Radius of transducer probe
+            "focus" == [float][m] Focal point in space 
+            "initPressure" == [float][Pa] Initial Pressure output by transducer
 
         medium == [dict] dictionary of medium properties
-            "speed" == [m/s] Speed of Sound
-            "density" == [kg/m^3] Density 
-            "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
+            "speed" == [float][m/s] Speed of Sound
+            "density" == [float][kg/m^3] Density 
+            "absCoeff" == [float][Np/(m*MHz^2)] Absorption Coefficient
 
-        field == calls 2D field properties
+        field == [dict] 2D field parameters
             "numAxialStep" == [int] Number of Axial Steps
             "numRadialStep" == [int] Number of Radial Steps
 

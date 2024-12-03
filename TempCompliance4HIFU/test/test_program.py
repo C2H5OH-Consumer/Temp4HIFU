@@ -1,6 +1,6 @@
-from TempCompliance4HIFU import calculateRayleighIntegral, calculateBioheat
+from Temp4HIFU import setParam, calculateRayleighIntegral, calculateBioheat
 import numpy as np
-import pandas as pd
+import pandas as pd 
 import unittest
 
 # Test Constants
@@ -12,15 +12,16 @@ observeZ = 0.05
 observeR = 0
 
 # Load Sample Data (PYTHON)
-sampledataDirectory = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/TempCompliance4HIFU/sampledata/'
-placeholder_df = sampledataDirectory + '/df_pressure2D_placeholder.csv'
-placeholder_z = sampledataDirectory + '/z_axis_placeholder.csv'
-placeholder_r =  sampledataDirectory + '/r_axis_placeholder.csv'
+sampledataDir = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/TempCompliance4HIFU/sampledata/'
+placeholder_df = sampledataDir + '/df_pressure2D_placeholder.csv'
+placeholder_z = sampledataDir + '/z_axis_placeholder.csv'
+placeholder_r =  sampledataDir + '/r_axis_placeholder.csv'
 df_pressure2D = np.array(pd.read_csv(placeholder_df))[:,1:]
 z_axis = np.array(pd.read_csv(placeholder_z))[:,1]
 r_axis = np.array(pd.read_csv(placeholder_r))[:,1]
 
 # Load Test Data (MATLAB)
+testdataDir = ''
 testData_pressure2D = np.array(pd.read_csv('testData_pressure2D.csv'))
 
 

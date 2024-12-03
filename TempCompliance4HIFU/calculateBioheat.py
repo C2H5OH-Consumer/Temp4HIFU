@@ -1,27 +1,27 @@
-def generateVector(axial_loc,radial_loc,trans,medium,heat,pressure2D,z_values,r_values,iscomplete=0):
+def generateVector(axial_loc:float,radial_loc:float,trans:dict,medium:dict,heat:dict,pressure2D:list,z_values:list,r_values:list,iscomplete=0):
     """
     INPUT ARG
-        axial_loc == [m] Coordinate Z of Interest Location
-        radial_loc == [m] Coordinate R of Interest Location
+        axial_loc == [float][m] Coordinate Z of Interest Location
+        radial_loc == [float][m] Coordinate R of Interest Location
 
-        trans == dictionary of transducer properties
-            "freq" == [Hz] Transmit Frequency of transducer
-            "radius" == [m] Radius of transducer probe
-            "focus" == [m] Focal point in space 
-            "initPressure" == [Pa] Initial Pressure output by transducer
+        trans == [dict] dictionary of transducer properties
+            "freq" == [float][Hz] Transmit Frequency of transducer
+            "radius" == [float][m] Radius of transducer probe
+            "focus" == [float][m] Focal point in space 
+            "initPressure" == [float][Pa] Initial Pressure output by transducer
 
-        medium == calls medium properties
-            "speed" == [m/s] Speed of Sound
-            "density" == [kg/m^3] Density 
-            "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
-            "specHeatCap" == [J/(kg*K)] Specific Heat Capacity
-            "thermDiff" == [(m^2)/s] Thermal Diffusivity 
+        medium == [dict] dictionary of medium properties
+            "speed" == [float][m/s] Speed of Sound
+            "density" == [float][kg/m^3] Density 
+            "absCoeff" == [float][Np/(m*MHz^2)] Absorption Coefficient
+            "specHeatCap" == [float][J/(kg*K)] Specific Heat Capacity
+            "thermDiff" == [float][(m^2)/s] Thermal Diffusivity 
 
-        heat == calls heating parameters
-            "numTime" == [s]
-            "HeatTime" == [s]
-            "CoolTime" == [s]
-            "DutyCycle" == [%] 
+        heat == [dict] dictionary of heating parameters
+            "numTime" == [float][s] Time Step aka Delta Time
+            "HeatTime" == [int][s] Amount of Time for Heating
+            "CoolTime" == [int][s] Amount of Time for Cooling
+            "DutyCycle" == [int][%] Ratio of On vs Off Time during Heating
 
         pressure2D == [2D list][p/p0] Rayleigh Integral Pressure Field
         z_values == [1D list][m] Axial axis of Pressure Field

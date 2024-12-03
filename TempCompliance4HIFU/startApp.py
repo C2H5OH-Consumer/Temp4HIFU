@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import os
 # CUSTOM FUNCTIONS
-import calculateRayleighIntegral, calculateBioheat
+import setParam, calculateRayleighIntegral, calculateBioheat
 
 ##### ---- ##### ---- ##### ---- SET FILE PLACEHOLDERS ---- ##### ---- ##### ---- #####
 sampledataDirectory = 'https://raw.githubusercontent.com/C2H5OH-Consumer/TempCompliance4HIFU/refs/heads/main/TempCompliance4HIFU/sampledata/'
@@ -17,7 +17,7 @@ placeholder_r =  sampledataDirectory + '/r_axis_placeholder.csv'
 
 ##### ---- ##### ---- ##### ---- BUILD APP ---- ##### ---- ##### ---- #####
 
-app = Dash('tempCompliance4HIFU')
+app = Dash('Temp4HIFU')
 app.layout = [
     # Title
     html.H1(children='Temperature Compliance for HIFU Transducers',style={'textAlign':'center'}), 
@@ -46,25 +46,25 @@ app.layout = [
         # Find Heat Location (Middle 1)
         html.H3('Calculate Heat at Point (Z,R)', style ={'textAlign':'center'}), 
             html.P('Axial Point Z [m]', style ={'textAlign':'left'}),
-                dcc.Input(id="observeZ",type='text',value=0.05),
+                dcc.Input(id="observeZ",type='number',value=0.05,min=0),
             html.P('Radial Point R [m]', style ={'textAlign':'left'}),
-                dcc.Input(id="observeR",type='text',value=0),
+                dcc.Input(id="observeR",type='number',value=0),
         # Heating Section (Middle 2)
         html.H3('Heating', style ={'textAlign':'center'}), 
             html.P('Time Heating [s]', style ={'textAlign':'left'}),
-                dcc.Input(id="HeatTime", type='number', placeholder='Input Heat Time',value=30),
+                dcc.Input(id="HeatTime", type='number', placeholder='Input Heat Time',value=30,min=0),
             html.P('Time Cooling [s]', style ={'textAlign':'left'}),
-                dcc.Input(id="CoolTime", type='number', placeholder='Input Cool Time',value=30),
+                dcc.Input(id="CoolTime", type='number', placeholder='Input Cool Time',value=30,min=0),
             html.P('Duty Cycle [Percentage]', style ={'textAlign':'left'}),
-                dcc.Input(id="DutyCycle", type='number', placeholder='Input Duty Cycle',value=100),
+                dcc.Input(id="DutyCycle", type='number', placeholder='Input Duty Cycle',value=100,min=0),
             html.P('Time Step for Temperature Graph [s]', style ={'textAlign':'left'}),
-                dcc.Input(id="numTime", type='number', placeholder='Input Time Step',value=0.005),
+                dcc.Input(id="numTime", type='number', placeholder='Input Time Step',value=0.005,min=0),
         # Plotting Section (Bottom)
         html.H3('Plotting Parameters', style ={'textAlign':'center'}), 
             html.P('Number of Axial Steps', style ={'textAlign':'left'}),
-                dcc.Input(id="numZ", type='number', placeholder='Input # Axial Steps',value=100),
+                dcc.Input(id="numZ", type='number', placeholder='Input # Axial Steps',value=100,min=1),
             html.P('Number of Radial Steps', style ={'textAlign':'left'}),
-                dcc.Input(id="numR", type='number', placeholder='Input # Radial Steps',value=100),
+                dcc.Input(id="numR", type='number', placeholder='Input # Radial Steps',value=100,min=1),
     ], style={'width': '15%', 'float': 'right', 'display': 'inline-block'}),
     # SPACE
     html.Div([html.H3(' ',style ={'textAlign':'center'})],style={'width': '3%', 'float': 'right', 'display': 'inline-block'}),
@@ -73,13 +73,13 @@ app.layout = [
         # Trandsucer Section (Top)
         html.H3('Transducer', style ={'textAlign':'center'}), 
             html.P('Frequency [MHz]', style ={'textAlign':'left'}),
-                dcc.Input(id="Frequency", type='number', placeholder='Input Frequency',value=1),
+                dcc.Input(id="Frequency", type='number', placeholder='Input Frequency',value=1,min=0),
             html.P('Radius [m]', style ={'textAlign':'left'}),
-                dcc.Input(id="Radius", type='number', placeholder='Input Radius',value=0.02),
+                dcc.Input(id="Radius", type='number', placeholder='Input Radius',value=0.02,min=0),
             html.P('Focus Distance [m]', style ={'textAlign':'left'}),
-                dcc.Input(id="Focus", type='number', placeholder='Input Focus Distance',value=0.05),
+                dcc.Input(id="Focus", type='number', placeholder='Input Focus Distance',value=0.05,min=0.001),
             html.P('Initial Pressure [MPa]', style ={'textAlign':'left'}),
-                dcc.Input(id="InitPress", type='number', placeholder='Input Initial Pressure',value=1),
+                dcc.Input(id="InitPress", type='number', placeholder='Input Initial Pressure',value=1,min=0),
         # Medium Section (Bottom)
         html.H3('Medium', style ={'textAlign':'center'}), 
             html.P('Presets', style ={'textAlign':'left'}), 
@@ -114,84 +114,9 @@ app.layout = [
     Input('SpecHeatCap','value'),       # [J/(kg*K)]
     Input('ThermDiff','value'),         # [(m^2)/s]
 )
-def getMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff):
-    mediumProp = setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
+def getMedium(DROP_medium:str, Speed:float, Density:float, AbsCoeff:float, SpecHeatCap:float, ThermDiff:float):
+    mediumProp = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
     return mediumProp['speed'], mediumProp['density'], mediumProp['absCoeff'], mediumProp['specHeatCap'], mediumProp['thermDiff']
-# Medium Presets
-def setMedium(index:str, speed_in, dens_in, absCoeff_in, specHeatCap_in, thermDiff_in):
-    """
-    INPUT ARG
-        index == [str] text to call specific preset dictionary
-        inputs == [dict] for custom set dictionary
-
-    OUTPUT ARG
-        medium == [dict] dictionary of medium properties
-            "name" == [str] Identifying Name for Preset Dictionaries 
-            "speed" == [m/s] Speed of Sound
-            "density" == [kg/m^3] Density 
-            "absCoeff" == [Np/(m*MHz^2)] Absorption Coefficient
-            "specHeatCap" == [J/(kg*K)] Specific Heat Capacity
-            "thermDiff" == [(m^2)/s] Thermal Diffusivity 
-    """
-    # If Input is None, Set to Zero
-    if speed_in == None: 
-        speed_in = 0
-    if dens_in == None: 
-        dens_in = 0
-    if absCoeff_in == None: 
-        absCoeff_in = 0
-    if specHeatCap_in == None: 
-        specHeatCap_in = 0
-    if thermDiff_in == None: 
-        thermDiff_in = 0
-    # Get Preset based on Index
-    match index:
-        case 'Water':
-            medium = dict(
-                name = 'Water',
-                speed = 1500,
-                density = 1000,
-                absCoeff = 0.025,
-                specHeatCap = 4180,
-                thermDiff = 1.46 * 1e-7,
-            )
-        case 'Glycerol':
-            medium = dict(
-                name = 'Glycerol',
-                speed = 1920,
-                density = 1264,
-                absCoeff = 3.6,
-                specHeatCap = 2407,
-                thermDiff = 0.95 * 1e-7,
-            )
-        case 'Egg White':
-            medium = dict(
-                name = 'Egg White',
-                speed = 1546,
-                density = 1045,
-                absCoeff = 3.5,
-                specHeatCap = 4270,
-                thermDiff = 1.32 * 1e-7,
-            )
-        case 'Castor Oil':
-            medium = dict(
-                name = 'Castor Oil',
-                speed = 1500,
-                density = 960,
-                absCoeff = 6,
-                specHeatCap = 1800,
-                thermDiff = 1.05 * 1e-7,
-            )
-        case 'Custom':
-            medium = dict(
-                name = 'Custom',
-                speed = speed_in,
-                density = dens_in,
-                absCoeff = absCoeff_in,
-                specHeatCap = specHeatCap_in,
-                thermDiff = thermDiff_in,
-            )
-    return medium
 
 # Update 2D Figure (Pressure or Intensity)
 @callback(
@@ -207,7 +132,8 @@ def setMedium(index:str, speed_in, dens_in, absCoeff_in, specHeatCap_in, thermDi
     Input('Speed','value'),             # [m/s]
     Input('Density','value'),           # [kg/m^3]
 )
-def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPress,DutyCycle,Speed,Density):
+def update2Dfigure(btnClicks:int,DROP_field2D:str,filename1:str,filename2:str,filename3:str,
+                   InitPress:float,DutyCycle:int,Speed:float,Density:float):
     if btnClicks > 0:
         # Load in Files
         df_pressure2D = np.array(pd.read_csv(filename1))[:,1:]
@@ -267,16 +193,16 @@ def update2Dfigure(btnClicks,DROP_field2D,filename1,filename2,filename3,InitPres
     Input('ZAXE','value'),              # [text] links to 1D List [m]
     Input('RAXE','value'),              # [text] links to 1D List [m]
 )
-def calculate2DField(button2DClicks,
-                     Frequency, Radius, Focus, InitPress, 
-                     DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff,
-                     numZ, numR, 
-                     filename1, filename2, filename3):
+def calculate2DField(button2DClicks:int,
+                     Frequency:float, Radius:float, Focus:float, InitPress:float, 
+                     DROP_medium:str, Speed:float, Density:float, AbsCoeff:float, SpecHeatCap:float, ThermDiff:float,
+                     numZ:int, numR:int, 
+                     filename1:str, filename2:str, filename3:str):
     # When the Button is Pressed
     if 'button2D' == ctx.triggered_id:
         # Set Input Parameters
         trans = dict(freq = Frequency*1e6,radius = Radius, focus = Focus, initPressure = InitPress*1e6)
-        medium = setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
+        medium = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
         field = dict(numAxialStep = numZ, numRadialStep = numR)
         # Rayleigh Integral
         df_pressure2D, z_axis, r_axis, iscomplete = calculateRayleighIntegral.generateField(trans,medium,field)
@@ -335,12 +261,12 @@ def calculate2DField(button2DClicks,
     Input('ZAXE','value'),              # [text] links to 1D List [m]
     Input('RAXE','value'),              # [text] links to 1D List [m]
 )
-def calculate1DField(button1DClicks,
-                     Frequency, Radius, Focus, InitPress, 
-                     DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff,
-                     numTime, HeatTime, CoolTime, DutyCycle,
-                     observeZ, observeR,
-                     filename1, filename2, filename3):
+def calculate1DField(button1DClicks:int,
+                     Frequency:float, Radius:float, Focus:float, InitPress:float, 
+                     DROP_medium:str, Speed:float, Density:float, AbsCoeff:float, SpecHeatCap:float, ThermDiff:float,
+                     numTime:float, HeatTime:int, CoolTime:int, DutyCycle:int,
+                     observeZ:float, observeR:float,
+                     filename1:str, filename2:str, filename3:str):
     # When the Button is Pressed
     if 'button1D' == ctx.triggered_id:
         # Get Files   
@@ -349,7 +275,7 @@ def calculate1DField(button1DClicks,
         r_axis = np.array(pd.read_csv(filename3))[:,1]
         # Set Input Parameters
         trans = dict(freq = Frequency*1e6,radius = Radius, focus = Focus, initPressure = InitPress*1e6)
-        medium = setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
+        medium = setParam.setMedium(DROP_medium, Speed, Density, AbsCoeff, SpecHeatCap, ThermDiff)
         heat = dict(HeatTime = HeatTime, CoolTime = CoolTime, DutyCycle = DutyCycle, numTime = numTime)
         # Bioheat Equation for Location in Space
         time_axis, temp_vec, Q, iscomplete = calculateBioheat.generateVector(observeZ,observeR,trans,medium,heat,df_pressure2D,z_axis,r_axis,iscomplete=0)
