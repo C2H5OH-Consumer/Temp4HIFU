@@ -10,7 +10,7 @@ medium = dict(name='Water', speed=1500, density=1000, absCoeff=0.025, specHeatCa
 # Test Functions
 class TestFunctions(unittest.TestCase):
     
-    def test_setParam_one(self):
+    def test_setParam_egg(self):
         """
         Test if Output for Egg White is Maintained
         """
@@ -24,16 +24,16 @@ class TestFunctions(unittest.TestCase):
             thermDiff = 1.32 * 1e-7,
         )
         self.assertDictEqual(D1, D2)
-        print('> test_setParam_one PASS')
+        print('> test_setParam_egg PASS')
 
 
-    def test_setParam_two(self):
+    def test_setParam_water(self):
         """
         Test if Output for Water is Maintained
         """
         D1 = setParam.setMedium('Water',0,0,0,0,0)
         self.assertDictEqual(D1, medium)
-        print('> test_setParam_two PASS')
+        print('> test_setParam_water PASS')
 
 # Finish
 if __name__ == "__main__":

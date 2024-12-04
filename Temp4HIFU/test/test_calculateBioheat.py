@@ -23,20 +23,58 @@ r_axis = np.array(pd.read_csv(placeholder_r))[:,1]
 
 # Load Test Data (MATLAB)
 testdataDir = 'https://raw.githubusercontent.com/C2H5OH-Consumer/Temp4HIFU/refs/heads/main/Temp4HIFU/test/testData/'
-# testData_pressure2D = np.array(pd.read_csv('testData_pressure2D.csv'))
+testData_time_axis = (pd.read_csv(testdataDir + 'testData_timeVec.csv',header=None))
+testData_temp_Vec = (pd.read_csv(testdataDir + 'testData_tempVec.csv',header=None))
+# Convert to Lists
+testData_t_axis = testData_time_axis[0].tolist()
+testData_temp_Vec = np.array(testData_temp_Vec)
+
+
+##### ---- ##### ---- ##### ---- TESTING ---- ##### ---- ##### ---- #####
+
+
+# FUNCTION TO TEST AGAINST
+time_axis, temp_vec, Q, iscomplete = calculateBioheat.generateVector(observeZ,observeR,trans,medium,heat,df_pressure2D,z_axis,r_axis,iscomplete=0)
 
 
 # Test Functions
 class TestFunctions(unittest.TestCase):
-    
-    def test_calculateBioheat_complete(self):
+    """
+    1. Assert True for Completion
+    2. Assert Equal Length Check for Time Axis
+    3. XX Assert Equal Check for Time Axis
+    4. Assert Equal Length Check for Temp
+    5. XX Assert Almost Equal Check for Temp
+    """
+    def test_calBioheat_tempVec(self):
         """
-        Test if function completes fully - iscomplete
+        Assert Equal Length Check for Temp
+            XX Assert Almost Equal Check for Temp
         """
-        time_axis, temp_vec, Q, iscomplete = calculateBioheat.generateVector(observeZ,observeR,trans,medium,heat,df_pressure2D,z_axis,r_axis,iscomplete=0)
-        self.assertTrue(iscomplete == 1)
-        print('> test_calculateBioheat_complete PASS')
+        # Assert Equal Length Check for Pressure2D
+        self.assertEqual(len(testData_temp_Vec),len(temp_vec))
+        # Assert Almost Equal Output for Pressure2D
+        # self.assertAlmostEqual(df_pressure2D,testData_pressure2D)
+        print('> test_calBioheat_tempVec PASS')
 
+
+    def test_calBioheat_timeAxis(self):
+        """
+        Assert Equal Length Check for Time Axis
+            XX Assert Almost Equal Check for Time Axis
+        """
+        self.assertEqual(len(testData_time_axis),len(time_axis))
+        # Assert Almost Equal Output for R Axis (since zero component is a float on the order of 1e-19 or smaller)
+        # self.assertAlmostEqual(r_axis, testData_r_axis) 
+        print('> test_calBioheat_timeAxis PASS')
+
+
+    def test_calBioheat_complete(self):
+        """
+        Assert True for Completion
+        """
+        self.assertTrue(iscomplete)
+        print('> test_calBioheat_complete PASS')
 
 
 # Finish
