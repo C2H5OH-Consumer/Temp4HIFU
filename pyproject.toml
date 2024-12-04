@@ -1,6 +1,6 @@
 [project]
-name = "Temp4HIFU"
-version = "0.1.0"
+name = "temp4hifu"
+version = "0.1.1"
 authors = [
   { name="Gerald Lee", email="gerald13@uw.edu" },
 ]
