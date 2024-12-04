@@ -28,10 +28,15 @@ Ensure you have the following additional Python packages:
     3. dash
 If not, please pip install these packages as well. 
 
-### EXECUTE GUI
-from Temp4HIFU import startApp.py
-python startApp.py
+### GUI
+import Temp4HIFU.startApp
+Temp4HIFU.startApp
 
+### INDIVIDUAL FUNCTIONS
+from Temp4HIFU import setParam, calculateBioheat, calculateRayleighIntegral
+setParam.setMedium(INPUT_ARG)
+calculateBioheat.generateVec(INPUT_ARG)
+calculateRayleighIntegral.generateField(INPUT_ARG)
 
 ## GUI COMPONENTS AND FUNCTION NOTES
 The GUI is able to perform and sustain the following actions:
