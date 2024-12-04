@@ -8,7 +8,7 @@ version = "0.1.2"
 authors = [
   { name="Gerald Lee", email="gerald13@uw.edu" },
 ]
-description = "A Python package designed to estimate the temperature increase due to high intensity focused ultrasound (HIFU) excitation.\n"
+description = "A Python package designed to estimate the temperature increase due to high intensity focused ultrasound (HIFU) excitation"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -18,4 +18,4 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/C2H5OH-Consumer/Temp4HIFU"
+Homepage = "https://github.com/C2H5OH-Consumer/temp4hifu"
