@@ -2,7 +2,7 @@
 import unittest
 import sys
 sys.path.append('../Temp4HIFU')
-from Temp4HIFU import setParam
+from temp4hifu import setParam
 
 # Test Constants
 medium = dict(name='Water', speed=1500, density=1000, absCoeff=0.025, specHeatCap=4180, thermDiff=1.46*1e-7)
