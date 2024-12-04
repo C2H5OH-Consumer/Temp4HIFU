@@ -14,7 +14,6 @@ Provided here is a tool to estimate bioheat from HIFU, usable as a GUI or import
 
 
 ## INSTALLATION AND USE
-pip install temp4hifu
 
 ### PRE-REQUISITES
 Ensure you have the following additional Python packages installed into your machine:
@@ -23,16 +22,22 @@ Ensure you have the following additional Python packages installed into your mac
     3. dash
 Please pip install these packages as well. 
 
-### GUI
-*SEE EXAMPLE SCRIPTS*
-import temp4hifu.startApp
-temp4hifu.startApp
+### PIP INSTALL
+pip install temp4hifu numpy pandas dash
+
+### GUI 
+In Terminal, type:
+python -m temp4hifu.startApp
 
 Then follow the server link to view the application. 
 *NOTE: To kill the app in terminal, CTRL+C*
 
+An alternate set of lines to run:
+from temp4hifu.startApp import app
+app.run(debug=True)
+
+
 ### INDIVIDUAL FUNCTIONS
-*SEE EXAMPLE SCRIPTS*
 from temp4hifu import setParam, calculateBioheat, calculateRayleighIntegral
 setParam.setMedium(INPUT_ARG)
 calculateRayleighIntegral.generateField(INPUT_ARG)
