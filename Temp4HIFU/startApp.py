@@ -7,10 +7,10 @@ import pandas as pd
 import numpy as np
 import os
 # CUSTOM FUNCTIONS
-import setParam, calculateBioheat, calculateRayleighIntegral
-# import setParam, calculateRayleighIntegral, calculateBioheat
+from temp4hifu import setParam, calculateBioheat, calculateRayleighIntegral
 
 ##### ---- ##### ---- ##### ---- SET FILE PLACEHOLDERS ---- ##### ---- ##### ---- #####
+
 sampledataDirectory = 'https://raw.githubusercontent.com/C2H5OH-Consumer/temp4hifu/refs/heads/main/Temp4HIFU/sampledata/'
 placeholder_df = sampledataDirectory + 'df_pressure2D_placeholder.csv'
 placeholder_z = sampledataDirectory + 'z_axis_placeholder.csv'

@@ -17,12 +17,12 @@ Last Updated 12/02/2024 by Gerald Lee
 
 Note: Dash provides a link to an online web based GUI service run from the machine. This, however, freezes the terminal. 
       CTRL+C kills the command, but once the script stops running then the webpage will also fail to return any callbacks called after killing the app. 
-      Use instructions include to 1) open the link and 2) when ready to kill app, kill app in terminal.
+      Use instructions include to 1. open the link and 2. when ready to kill app, kill app in terminal.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-## Python Functions ##
+## Python Modules and Functions ##
 
 
 [This function returns a preset dictionary or combines values into a custom set dictionary.]

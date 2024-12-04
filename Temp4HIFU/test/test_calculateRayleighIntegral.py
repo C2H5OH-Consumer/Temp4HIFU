@@ -11,7 +11,7 @@ medium = dict(name='Water', speed=1500, density=1000, absCoeff=0.025, specHeatCa
 field = dict(numAxialStep = 100, numRadialStep = 100)
 
 # Load Test Data (MATLAB)
-testdataDir = 'https://raw.githubusercontent.com/C2H5OH-Consumer/Temp4HIFU/refs/heads/main/Temp4HIFU/test/testData/'
+testdataDir = 'https://raw.githubusercontent.com/C2H5OH-Consumer/temp4hifu/refs/heads/main/Temp4HIFU/test/testData/'
 testData_z_axis = (pd.read_csv(testdataDir + 'testData_z_axis.csv',header=None))
 testData_r_axis = (pd.read_csv(testdataDir + 'testData_r_axis.csv',header=None))
 testData_pressure2D = (pd.read_csv(testdataDir + 'testData_pressure2D.csv',header=None))
