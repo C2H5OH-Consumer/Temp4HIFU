@@ -19,7 +19,7 @@ Provided here is a tool to estimate bioheat from HIFU, usable as a GUI or import
 This package is designed to be used within a provided GUI or as independent functions. Inputs 
 
 ### SETUP
-pip install Temp4HIFU
+pip install temp4hifu
 
 ### PRE-REQUISITES
 Ensure you have the following additional Python packages:
@@ -29,11 +29,11 @@ Ensure you have the following additional Python packages:
 If not, please pip install these packages as well. 
 
 ### GUI
-import Temp4HIFU.startApp
-Temp4HIFU.startApp
+import temp4hifu.startApp
+temp4hifu.startApp
 
 ### INDIVIDUAL FUNCTIONS
-from Temp4HIFU import setParam, calculateBioheat, calculateRayleighIntegral
+from temp4hifu import setParam, calculateBioheat, calculateRayleighIntegral
 setParam.setMedium(INPUT_ARG)
 calculateBioheat.generateVec(INPUT_ARG)
 calculateRayleighIntegral.generateField(INPUT_ARG)

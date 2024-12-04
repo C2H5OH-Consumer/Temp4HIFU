@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import os
 # CUSTOM FUNCTIONS
-from Temp4HIFU import setParam, calculateBioheat, calculateRayleighIntegral
+from temp4hifu import setParam, calculateBioheat, calculateRayleighIntegral
 # import setParam, calculateRayleighIntegral, calculateBioheat
 
 ##### ---- ##### ---- ##### ---- SET FILE PLACEHOLDERS ---- ##### ---- ##### ---- #####
@@ -18,7 +18,7 @@ placeholder_r =  sampledataDirectory + '/r_axis_placeholder.csv'
 
 ##### ---- ##### ---- ##### ---- BUILD APP ---- ##### ---- ##### ---- #####
 
-app = Dash('Temp4HIFU')
+app = Dash('temp4hifu')
 app.layout = [
     # Title
     html.H1(children='Temperature Compliance for HIFU Transducers',style={'textAlign':'center'}), 
