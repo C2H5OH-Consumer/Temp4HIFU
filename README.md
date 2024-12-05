@@ -6,7 +6,7 @@ Author: Gerald Lee
 
 A Python package designed to estimate the temperature increase due to high intensity focused ultrasound (HIFU) excitation. 
 
-CURRENT ACTIVE VERSION = 0.2.1
+CURRENT ACTIVE VERSION = 0.2.2
 
 LAST UPDATED: 12/05/2024
 

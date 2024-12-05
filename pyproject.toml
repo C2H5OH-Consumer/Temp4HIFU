@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "temp4hifu"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
   { name="Gerald Lee", email="gerald13@uw.edu" },
 ]

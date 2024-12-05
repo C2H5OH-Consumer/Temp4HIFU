@@ -21,7 +21,7 @@ placeholder_r =  sampledataDirectory + 'r_axis_placeholder.csv'
 app = Dash('temp4hifu')
 app.layout = [
     # Title
-    html.H1(children='Temperature Compliance for HIFU Transducers',style={'textAlign':'center'}), 
+    html.H1(children='Temperature for HIFU 0.2.2',style={'textAlign':'center'}), 
     # TOP Section - Button and Messages
     html.Div([
         html.Button('LOAD FILES',id='buttonLoad',n_clicks=0),
