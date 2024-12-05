@@ -35,14 +35,18 @@ Then follow the server link to view the application.
 An alternate set of lines to run:
 
 `from temp4hifu.startApp import app`
+
 `app.run(debug=True)`
 
 ### USING INDIVIDUAL FUNCTIONS
 You may choose to use one or more of the following modules, imported as follows: 
 
 `from temp4hifu import setParam, calculateBioheat, calculateRayleighIntegral`
+
 `setParam.setMedium(INPUT_ARG)`
+
 `calculateRayleighIntegral.generateField(INPUT_ARG)`
+
 `calculateBioheat.generateVector(INPUT_ARG)`
 
 
@@ -66,7 +70,10 @@ This package was intended to include addtional components such as different mode
 
 
 ## RESOURCES
-Github Link == https://github.com/C2H5OH-Consumer/temp4hifu
-    Contains Sample Scripts using Juypter Notebooks:
-        `sampleScript_loadFunctions.ipynb`
-        `sampleScript_loadGUI.ipynb`
+[Github Link] https://github.com/C2H5OH-Consumer/temp4hifu
+    
+Contains Sample Scripts using Juypter Notebooks:
+
+`sampleScript_loadFunctions.ipynb`
+
+`sampleScript_loadGUI.ipynb`
