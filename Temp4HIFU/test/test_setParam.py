@@ -1,7 +1,4 @@
-# Imports
 import unittest
-import sys
-sys.path.append('../Temp4HIFU')
 from temp4hifu import setParam
 
 # Test Constants

@@ -100,6 +100,30 @@ app.layout = [
 
 ##### ---- ##### ---- ##### ---- CALLBACKS AND FUNCTIONS  ---- ##### ---- ##### ---- #####
 
+# Check File Input Validity
+def fileCheck(filepath:str):
+    """ 
+    Check if file can be read as CSV or TXT. 
+    Throws Error if not able to be read by Pandas.
+
+    INPUT ARG
+        filepath == [str] input file path to test
+
+    OUTPUT ARG
+        None Returned
+    """
+    # Test if File is Readable by Pandas
+    try:
+        dummyDF = pd.read_csv(filepath)
+
+        # Check if File is Empty
+        if dummyDF.empty == True:
+            raise TypeError("File is empty for " + filepath) 
+
+    # If not able to be read by Pandas
+    except:
+        raise TypeError("Invalid file type for " + filepath) 
+        
 # Set Medium Properties Callback
 @callback(
     Output('Speed','value'),            # [m/s]
@@ -136,6 +160,10 @@ def getMedium(DROP_medium:str, Speed:float, Density:float, AbsCoeff:float, SpecH
 def update2Dfigure(btnClicks:int,DROP_field2D:str,filename1:str,filename2:str,filename3:str,
                 InitPress:float,DutyCycle:int,Speed:float,Density:float):
     if btnClicks > 0:
+        # Check File Validity
+        fileCheck(filename1)
+        fileCheck(filename2)
+        fileCheck(filename3)
         # Load in Files
         df_pressure2D = np.array(pd.read_csv(filename1))[:,1:]
         z_axis = np.array(pd.read_csv(filename2))[:,1]
@@ -270,6 +298,10 @@ def calculate1DField(button1DClicks:int,
                     filename1:str, filename2:str, filename3:str):
     # When the Button is Pressed
     if 'button1D' == ctx.triggered_id:
+        # Check File Validity
+        fileCheck(filename1)
+        fileCheck(filename2)
+        fileCheck(filename3)
         # Get Files   
         df_pressure2D = np.array(pd.read_csv(filename1))[:,1:]
         z_axis = np.array(pd.read_csv(filename2))[:,1]

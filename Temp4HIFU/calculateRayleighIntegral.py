@@ -1,3 +1,5 @@
+import numpy as np
+
 def generateField(trans:dict,medium:dict,field:dict,iscomplete=0):
     """
     INPUT ARG
@@ -22,7 +24,6 @@ def generateField(trans:dict,medium:dict,field:dict,iscomplete=0):
         r_axis == [1D list][m] Radial axis of Pressure Field 
 
     """
-    import numpy as np
     
     # Edit and Transform Transducer Properties
     d = trans["focus"] # Reallocate variable

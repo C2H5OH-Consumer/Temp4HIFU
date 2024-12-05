@@ -1,3 +1,5 @@
+import numpy as np
+
 def generateVector(axial_loc:float,radial_loc:float,trans:dict,medium:dict,heat:dict,pressure2D:list,z_values:list,r_values:list,iscomplete=0):
     """
     INPUT ARG
@@ -32,7 +34,6 @@ def generateVector(axial_loc:float,radial_loc:float,trans:dict,medium:dict,heat:
         temp_vec == [1D list][Celsius] Temperature Vector over Time
         Q == [2D list][Joules] Heat Map 
     """
-    import numpy as np
 
     # Edit and Transform Transducer Properties
     d = trans["focus"] # Reallocate variable
