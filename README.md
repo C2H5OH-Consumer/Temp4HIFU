@@ -16,9 +16,9 @@ Provided here is a tool to estimate bioheat from HIFU, usable as a GUI or import
 
 ### PRE-REQUISITES
 In addition to the temp4hifu Python package, ensure you have the following additional Python packages installed into your machine:
-    1. numpy
-    2. pandas
-    3. dash
+1. numpy
+2. pandas
+3. dash
 
 You may choose to pip install these packages separately, or as one line as follows: 
 
@@ -70,7 +70,7 @@ This package was intended to include addtional components such as different mode
 
 
 ## RESOURCES
-[Github Link] https://github.com/C2H5OH-Consumer/temp4hifu
+Github Link [https://github.com/C2H5OH-Consumer/temp4hifu]
     
 Contains Sample Scripts using Juypter Notebooks:
 
