@@ -6,9 +6,9 @@ Author: Gerald Lee
 
 A Python package designed to estimate the temperature increase due to high intensity focused ultrasound (HIFU) excitation. 
 
-CURRENT ACTIVE VERSION = 0.2.0
+CURRENT ACTIVE VERSION = 0.2.1
 
-LAST UPDATED 12/05/2024
+LAST UPDATED: 12/05/2024
 
 ## BACKGROUND
 High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as for cancer treatment. The generated increase of temperature during HIFU thermal treatment must be within safety guidelines for human use (44 degrees Celsius), which is essential for FDA approval and compliance. Accurate predictions of temperature bioeffects must be demonstrated through computational simulations before applications ex vivo and in vivo. Computational simulations requires modeling for both HIFU/FUS pressure fields and then the Bioheat equation; not complicated individually, but when combined can be tricky to navigate based on initial conditions.
@@ -25,7 +25,7 @@ In addition to the temp4hifu Python package, ensure you have the following addit
 
 You may choose to pip install these packages separately, or as one line as follows: 
 
-`pip install temp4hifu numpy pandas dash`
+`pip install numpy pandas dash temp4hifu`
 
 ### USING GUI 
 In Terminal, type:
