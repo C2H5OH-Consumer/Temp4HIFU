@@ -1,31 +1,46 @@
 
 COMPONENT SPECIFICATIONS
 
-Last Updated 12/02/2024 by Gerald Lee
+Last Updated 12/05/2024 by Gerald Lee
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+## Imported Python Packages ##
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+## numpy ##
+Used as a base for Pandas and computational functions listed below (calculateRayleighIntegral.py and calculateBioheat.py)
+
+## pandas ## 
+Used to load .CSV or .TXT files into the GUI. Used to write .CSV file output from GUI. 
+Used by Dash to load data frames for 2D plotting.  
+Data frames have no headers. 
 
 ## Dash ##
-    startApp
-        - Provides Graphical User Interface (GUI)
-            - User interface to mouse over a point of interest on the pressure field.
-            - User interface to change time scale for temperature graph
-            - Allows change of variables through inputs and dropdown menus
-            - Graphs figures using Plotly express and graph-objects
-            - Provides callbacks to initiate large functions and calculations
+startApp.py
+    - Provides Graphical User Interface (GUI)
+        - User interface to mouse over a point of interest on the pressure field.
+        - User interface to mouse over a point of interest on temperature graph.
+        - Allows change of variables through inputs and dropdown menus
+        - Graphs figures using Plotly express and graph-objects
+        - Provides callbacks to initiate large functions and calculations
 
-Note: Dash provides a link to an online web based GUI service run from the machine. This, however, freezes the terminal. 
-      CTRL+C kills the command, but once the script stops running then the webpage will also fail to return any callbacks called after killing the app. 
-      Use instructions include to 1. open the link and 2. when ready to kill app, kill app in terminal.
+Dash provides a link to an online web based GUI service run from the machine. This, however, freezes the terminal. 
+CTRL+C kills the command, but once the script stops running then the webpage will also fail to return any callbacks called after killing the app. 
+Use instructions include to 1. open the link and 2. when ready to kill app, kill app in terminal.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-## Python Modules and Functions ##
+## Added Python Modules and Functions ##
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 [This function returns a preset dictionary or combines values into a custom set dictionary.]
+
 setParam
     .setMedium
         INPUT ARG
@@ -45,8 +60,15 @@ setParam
                 "specHeatCap" == [float][J/(kg*K)] Specific Heat Capacity
                 "thermDiff" == [float][(m^2)/s] Thermal Diffusivity 
 
+Output arguments are used in the GUI for the dropdown menu and as a preset for input into the below functions. 
+Users may call this function to load in preset medium properties. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 [This function outputs a pressure field and its respective axes based on the given inputs.]
+
 calculateRayleighIntegral
     .generateField
         INPUT ARG
@@ -70,8 +92,17 @@ calculateRayleighIntegral
             z_axis == [1D list][m] Axial axis of Pressure Field
             r_axis == [1D list][m] Radial axis of Pressure Field 
 
+Output arguments are lists that get converted into a .CSV using the pandas package. 
+The GUI then reads these .CSV files to create the 2D plot and to input into calculateBioheat.generateVector. 
+This also allows the user to manipulate the 2D plot without having to run the rayleigh integral. 
+Created files are saved to the directory in which the session of Python is being run. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 [This function outputs a temperature vector and its respective time axis based on the given inputs.]
+
 calculateBioheat
     .generateVector
         INPUT ARG
@@ -106,10 +137,16 @@ calculateBioheat
             temp_vec == [1D list][Celsius] Temperature Vector over Time
             Q == [2D list][Joules] Heat Map 
 
+Output arguments are not saved as .CSV file. 
+Instead, the GUI returns a figure plot using the output lists. 
+This displays the temperature at a specific location in space, allowing the user to identify the approximate temperature being output by the given parameters. 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ## Project Plan ##
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Week 6 (11/04/2024 - 11/08/2024)
     Planning Initial Plan for Functions, Inputs, Outputs
@@ -137,7 +174,16 @@ calculateBioheat
     Finalize Presentation
 
 - Week 10 (12/02/2024 - 12/06/2024)
+    Package Preparation
     Present Work
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+## Future Work ##
+
+No future work is intended to be applied to this package. However, additional modules regarding nonlinear physics and heat transfer can be created and easily added to this package to support more comprehensive HIFU-Bioheat models. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
