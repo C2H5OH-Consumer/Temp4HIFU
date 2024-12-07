@@ -1,24 +1,19 @@
 
-COMPONENT SPECIFICATIONS
+# COMPONENT SPECIFICATIONS
 
 Last Updated 12/05/2024 by Gerald Lee
 
+## Imported Python Packages
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-## Imported Python Packages ##
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-## numpy ##
+### numpy
 Used as a base for Pandas and computational functions listed below (calculateRayleighIntegral.py and calculateBioheat.py)
 
-## pandas ## 
+### pandas
 Used to load .CSV or .TXT files into the GUI. Used to write .CSV file output from GUI. 
 Used by Dash to load data frames for 2D plotting.  
 Data frames have no headers. 
 
-## Dash ##
+### dash
 startApp.py
     - Provides Graphical User Interface (GUI)
         - User interface to mouse over a point of interest on the pressure field.
@@ -32,14 +27,9 @@ CTRL+C kills the command, but once the script stops running then the webpage wil
 Use instructions include to 1. open the link and 2. when ready to kill app, kill app in terminal.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## Added Python Modules and Functions
 
-## Added Python Modules and Functions ##
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-[This function returns a preset dictionary or combines values into a custom set dictionary.]
+#### [This function returns a preset dictionary or combines values into a custom set dictionary.]
 
 setParam
     .setMedium
@@ -64,10 +54,7 @@ Output arguments are used in the GUI for the dropdown menu and as a preset for i
 Users may call this function to load in preset medium properties. 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-[This function outputs a pressure field and its respective axes based on the given inputs.]
+#### [This function outputs a pressure field and its respective axes based on the given inputs.]
 
 calculateRayleighIntegral
     .generateField
@@ -98,10 +85,7 @@ This also allows the user to manipulate the 2D plot without having to run the ra
 Created files are saved to the directory in which the session of Python is being run. 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-[This function outputs a temperature vector and its respective time axis based on the given inputs.]
+#### [This function outputs a temperature vector and its respective time axis based on the given inputs.]
 
 calculateBioheat
     .generateVector
@@ -142,11 +126,7 @@ Instead, the GUI returns a figure plot using the output lists.
 This displays the temperature at a specific location in space, allowing the user to identify the approximate temperature being output by the given parameters. 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-## Project Plan ##
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## Tentative Project Plan
 
 - Week 6 (11/04/2024 - 11/08/2024)
     Planning Initial Plan for Functions, Inputs, Outputs
@@ -178,12 +158,6 @@ This displays the temperature at a specific location in space, allowing the user
     Present Work
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-## Future Work ##
+## Future Work 
 
 No future work is intended to be applied to this package. However, additional modules regarding nonlinear physics and heat transfer can be created and easily added to this package to support more comprehensive HIFU-Bioheat models. 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

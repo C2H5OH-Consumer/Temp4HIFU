@@ -1,10 +1,8 @@
-Functional Specifications
+# Functional Specifications
 
 Last Updated 12/05/2024 by Gerald Lee
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+## Introduction
 
 High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as for cancer treatment. 
 The generated increase of temperature during HIFU thermal treatment must be within safety guidelines for human use (44 degrees Celsius), which is essential for FDA approval and compliance.
@@ -33,9 +31,6 @@ Its ability to load pre-calculated data also allows researchers to input their o
 Users that do not have access to MATLAB or COMSOL would be able to take advantage of this package to begin exploring therapeutic ultrasound design structures in Python instead of spending excessively for a computational program (although suggested to get MATLAB or COMSOL for more complex applications).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 ## Intended Users 
     1. Persons who have some knowledge of therapeutic ultrasound.
     2. Persons who would prefer to use Python for the above use cases specified above.
@@ -58,11 +53,7 @@ Users that do not have access to MATLAB or COMSOL would be able to take advantag
     - Visualize the bioheat components easily and simply in an online web browser. 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-## Project Plan ##
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## Tentative Project Plan 
 
 - Week 6 (11/04/2024 - 11/08/2024)
     Planning Initial Plan for Functions, Inputs, Outputs
@@ -94,12 +85,6 @@ Users that do not have access to MATLAB or COMSOL would be able to take advantag
     Present Work
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-## Future Work ##
+## Future Work 
 
 No future work is intended to be applied to this package. However, additional modules regarding nonlinear physics and heat transfer can be created and easily added to this package to support more comprehensive HIFU-Bioheat models. 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

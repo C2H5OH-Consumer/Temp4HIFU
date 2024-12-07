@@ -52,8 +52,8 @@ def generateVector(axial_loc:float,radial_loc:float,trans:dict,medium:dict,heat:
     Q = intensity2D * 2 * abs_Coeff / (medium["density"] * medium["specHeatCap"])
 
     # Temperature Matrix and Indices
-    numR,numZ = np.shape(pressure2D)
-    temp_dist = np.zeros((numR,numZ),dtype=np.float64)
+    numZ,numR = np.shape(pressure2D)
+    temp_dist = np.zeros((numZ,numR),dtype=np.float64)
     r_center_idx = round(((0-radial_min)/dr)+1)
     radial_temp_idx = round(((radial_loc-radial_min)/dr)+1)
     axial_temp_idx = round(((axial_loc-axial_min)/dz)+1)
@@ -64,47 +64,47 @@ def generateVector(axial_loc:float,radial_loc:float,trans:dict,medium:dict,heat:
     print('HEATING')
     for time_step in np.arange(dt,heat["HeatTime"]+dt,dt):
         curr_temp_dist = temp_dist
-        for ii in range(1,numR-1):
-            for jj in range(1, numZ-1):
-                currTemp = curr_temp_dist[ii,jj]
+        for zz in range(1,numZ-1):
+            for rr in range(1, numR-1):
+                currTemp = curr_temp_dist[zz,rr]
 
                 z_component = ((dt * medium["thermDiff"]) / pow(dr,2)) \
-                * (curr_temp_dist[ii+1,jj] - (2 * curr_temp_dist[ii,jj]) + curr_temp_dist[ii-1,jj]) 
+                * (curr_temp_dist[zz+1,rr] - (2 * curr_temp_dist[zz,rr]) + curr_temp_dist[zz-1,rr]) 
 
                 r_component = ((dt * medium["thermDiff"]) / pow(dr,2)) \
-                * (curr_temp_dist[ii,jj+1] - (2 * curr_temp_dist[ii,jj]) + curr_temp_dist[ii,jj-1]) \
-                + (1/r_values[jj]) * (curr_temp_dist[ii,jj+1] - curr_temp_dist[ii,jj-1]) \
+                * (curr_temp_dist[zz,rr+1] - (2 * curr_temp_dist[zz,rr]) + curr_temp_dist[zz,rr-1]) \
+                + (1/r_values[rr]) * (curr_temp_dist[zz,rr+1] - curr_temp_dist[zz,rr-1]) \
                 * (dt * medium["thermDiff"] / (2*dr))
 
-                if jj == r_center_idx:
+                if rr == r_center_idx:
                     r_component = 4*((dt * medium["thermDiff"]) / pow(dr,2)) \
-                    * (curr_temp_dist[ii,jj+1] - curr_temp_dist[ii,jj])
+                    * (curr_temp_dist[zz,rr+1] - curr_temp_dist[zz,rr])
 
-                Q_US = dt * Q[ii,jj]
-                temp_dist[ii,jj] = currTemp + z_component + r_component + Q_US
+                Q_US = dt * Q[zz,rr]
+                temp_dist[zz,rr] = currTemp + z_component + r_component + Q_US
         temp_vec.append(temp_dist[axial_temp_idx,radial_temp_idx])
 
     # FTCS Scheme ADD FUNCTION FOR COOL
     print('COOLING')
     for time_step in np.arange(dt,heat["CoolTime"],dt):
         curr_temp_dist = temp_dist
-        for ii in range(1,numR-2):
-            for jj in range(1, numZ-2):
-                currTemp = curr_temp_dist[ii,jj]
+        for zz in range(1,numZ-2):
+            for rr in range(1, numR-2):
+                currTemp = curr_temp_dist[zz,rr]
 
                 z_component = ((dt * medium["thermDiff"]) / pow(dr,2)) \
-                * (curr_temp_dist[ii+1,jj] - (2 * curr_temp_dist[ii,jj]) + curr_temp_dist[ii-1,jj]) 
+                * (curr_temp_dist[zz+1,rr] - (2 * curr_temp_dist[zz,rr]) + curr_temp_dist[zz-1,rr]) 
 
                 r_component = ((dt * medium["thermDiff"]) / pow(dr,2)) \
-                * (curr_temp_dist[ii,jj+1] - (2 * curr_temp_dist[ii,jj]) + curr_temp_dist[ii,jj-1]) \
-                + (1/r_values[jj]) * (curr_temp_dist[ii,jj+1] - curr_temp_dist[ii,jj-1]) \
+                * (curr_temp_dist[zz,rr+1] - (2 * curr_temp_dist[zz,rr]) + curr_temp_dist[zz,rr-1]) \
+                + (1/r_values[rr]) * (curr_temp_dist[zz,rr+1] - curr_temp_dist[zz,rr-1]) \
                 * (dt * medium["thermDiff"] / (2*dr))
 
-                if jj == r_center_idx:
+                if rr == r_center_idx:
                     r_component = 4*((dt * medium["thermDiff"]) / pow(dr,2)) \
-                    * (curr_temp_dist[ii,jj+1] - curr_temp_dist[ii,jj])
+                    * (curr_temp_dist[zz,rr+1] - curr_temp_dist[zz,rr])
 
-                temp_dist[ii,jj] = currTemp + z_component + r_component
+                temp_dist[zz,rr] = currTemp + z_component + r_component
         temp_vec.append(temp_dist[axial_temp_idx,radial_temp_idx])
 
     # Finish

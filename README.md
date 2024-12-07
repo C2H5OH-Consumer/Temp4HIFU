@@ -6,9 +6,12 @@ Author: Gerald Lee
 
 A Python package designed to estimate the temperature increase due to high intensity focused ultrasound (HIFU) excitation. 
 
-CURRENT ACTIVE VERSION = 0.2.2
+CURRENT ACTIVE VERSION =  1.0.0
 
-LAST UPDATED: 12/05/2024
+LAST UPDATED: 12/07/2024
+
+### NOTICE
+The Bioheat function returns an overflow error during the heating calculation, resulting in an overestimate of the maximum temperature increase. Thus, test functions and items that use the bioheat function should be used as a generous approximation. 
 
 ## BACKGROUND
 High Intensity Focused Ultrasound (HIFU) and Focused Ultrasound (FUS) are used for thermal treatment of cells such as for cancer treatment. The generated increase of temperature during HIFU thermal treatment must be within safety guidelines for human use (44 degrees Celsius), which is essential for FDA approval and compliance. Accurate predictions of temperature bioeffects must be demonstrated through computational simulations before applications ex vivo and in vivo. Computational simulations requires modeling for both HIFU/FUS pressure fields and then the Bioheat equation; not complicated individually, but when combined can be tricky to navigate based on initial conditions.
